@@ -38,10 +38,12 @@ contract TokenSale {
  	function tokenTransfer(address _adr) onlyAdmin public {
  		
  		token = addresslist[_adr];
+ 		require(token != 0);
  		demotoken.transfer(_adr,token);
+ 		addresslist[_adr] = 0;
  	}
 
- 	function requestApprove(address spender,uint256 _token)public returns(bool){
+ 	function transferApprove(address spender,uint256 _token)public returns(bool){
  		
  		demotoken.approve(spender,_token);
  	}
@@ -51,8 +53,7 @@ contract TokenSale {
  		demotoken.transferFrom(from,to,_token);
  	}
 
- 	function getList() public view returns(address[])
- 	{
+ 	function getList() public view returns(address[]){
  		return addresskey;
  	}
 
@@ -61,5 +62,5 @@ contract TokenSale {
  		return demotoken.allowance(_owner,_spender);
  	}
 
- 	
+
  }
