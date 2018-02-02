@@ -18,10 +18,11 @@ contract ChainToken is StandardToken {
 		
 	}
 	
-	function approve(address _spender, uint256 _token) public returns(bool){
+	function requestApprove(address _spender,address _admin, uint256 _token) public returns(bool){
 		
-		require(balances[msg.sender] >= _token);
-		super.approve(_spender,_token);
+		require(_spender == _admin);
+		approve(_spender,_token);
 	}
 
+	
 }
