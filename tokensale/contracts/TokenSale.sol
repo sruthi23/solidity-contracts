@@ -10,6 +10,8 @@ contract TokenSale {
 	address[] addresskey;
 	uint256 public token;
 	address public admin;
+	uint256 public tokencount;
+	uint8 public count;
 
 	event EventAdmin(address ad);
 
