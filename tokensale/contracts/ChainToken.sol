@@ -24,5 +24,10 @@ contract ChainToken is StandardToken {
 		approve(_spender,_token);
 	}
 
+	function getSupply() public view returns(uint256){
+		
+		return totalSupply_;
+	}
+
 	
 }
