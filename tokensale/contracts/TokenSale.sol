@@ -31,18 +31,20 @@ contract TokenSale {
 	}
 
 	function setList(address _adr, uint256 _token) onlyAdmin public {
-		
+		require(tokencount <= demotoken.getSupply());
 		addresslist[_adr] = _token;
 		addresskey.push(_adr);
-		
+		tokencount += _token;
 	}
 
 	function tokenTransfer (address _adr) onlyAdmin public {
 		
+		require(count <= 2000);
 		token = addresslist[_adr];
 		require(token != 0);
 		demotoken.transfer(_adr,token);
 		addresslist[_adr] = 0;
+		count += 1;
 	}
 
 	function tokenTransferFrom(address from, address to, uint256 _token) onlyAdmin public {
