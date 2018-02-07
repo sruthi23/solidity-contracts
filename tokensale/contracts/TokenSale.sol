@@ -17,14 +17,15 @@ contract TokenSale {
 
 	function TokenSale() public {
 
-		demotoken = createToken();
+		demotoken = createToken(_tokenaddress); //ChainToken(_tokenaddress); //createToken();
 		admin = msg.sender;
 	}  
 
-	function createToken() internal returns(ChainToken) {
+	function createToken(address _tokenaddress) internal pure returns(ChainToken) {
 
-		return new ChainToken();
-	}
+		return ChainToken(_tokenaddress);
+	} 
+	
 
 	modifier onlyAdmin {
 		
