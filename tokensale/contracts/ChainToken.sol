@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import './StandardToken.sol';
+import "../zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 
 contract ChainToken is StandardToken {
 
@@ -11,23 +11,8 @@ contract ChainToken is StandardToken {
 	address public owner;
 	
 	function ChainToken() public {
-
 		totalSupply_ = total_supply;
 		owner = msg.sender;
 		balances[owner] = total_supply;
-		
 	}
-	
-	function requestApprove(address _spender,address _admin, uint256 _token) public returns(bool){
-		
-		require(_spender == _admin);
-		approve(_spender,_token);
-	}
-
-	function getSupply() public view returns(uint256){
-		
-		return totalSupply_;
-	}
-
-	
 }
