@@ -8,13 +8,7 @@ contract('TokenSale', function() {
 		console.log('token created',tc)
 
 	});
-	/*it("admin should be assigned",async function(){
-
-		var tc = await TokenSale.deployed();
-		var admin = (await tc.getAdmin());
-		console.log("admin",admin);
-	});*/ 	 		
-
+	
 	it("setting list",async function(){
 
 		var tc = await TokenSale.deployed();
