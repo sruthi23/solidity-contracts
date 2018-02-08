@@ -15,15 +15,15 @@ contract TokenSale {
 
 	event EventAdmin(address ad);
 
-	function TokenSale(address _tokenaddress) public {
+	function TokenSale() public {
 
-		demotoken = createToken(_tokenaddress); //ChainToken(_tokenaddress); //createToken();
+		demotoken = createToken();
 		admin = msg.sender;
 	}  
 
-	function createToken(address _tokenaddress) internal pure returns(ChainToken) {
+	function createToken() internal returns(ChainToken) {
 
-		return ChainToken(_tokenaddress);
+		return new ChainToken();
 	} 
 	
 	function getAdmin() public view returns(address){
@@ -38,7 +38,6 @@ contract TokenSale {
 	}
 
 	function setList(address _adr, uint256 _token) onlyAdmin public returns (bool) {
-		require(tokencount <= demotoken.getSupply());
 		addresslist[_adr] = _token;
 		addresskey.push(_adr);
 		tokencount += _token;
