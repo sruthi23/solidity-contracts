@@ -10,10 +10,8 @@ contract TokenSale {
 	address[] addresskey;
 	uint256 public token = 0;
 	address public admin;
-	uint256 public tokencount;
+	//uint256 public tokencount;
 	uint8 public count;
-
-	event EventAdmin(address ad);
 
 	function TokenSale() public {
 
@@ -26,11 +24,6 @@ contract TokenSale {
 		return new ChainToken();
 	} 
 	
-	function getAdmin() public view returns(address){
-
-		return admin;
-	}
-
 	modifier onlyAdmin {
 
 		require(msg.sender == admin);
@@ -40,7 +33,7 @@ contract TokenSale {
 	function setList(address _adr, uint256 _token) onlyAdmin public returns (bool) {
 		addresslist[_adr] = _token;
 		addresskey.push(_adr);
-		tokencount += _token;
+		//tokencount += _token;
 		return true;
 	}
 
@@ -57,7 +50,7 @@ contract TokenSale {
 
 	function tokenTransferFrom(address from, address to, uint256 _token) onlyAdmin public {
 
-		demotoken.transferFrom(from,to,_token);
+		demotoken.transferFrom(from,to,_token,admin);
 	}
 
 	function getList() public view returns(address[]){
