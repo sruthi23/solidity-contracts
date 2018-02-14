@@ -74,8 +74,13 @@ contract('TokenSale', function(accounts) {
 	it("approving admin to transfer token", async function(){
 		var tc = await TokenSale.deployed();
 		var token = await tc.demotoken.call();
-		var result = await ChainToken.at(token).then(function(i){i.approve(accounts[0],2,{from :accounts[1]})});
-		assert(result != true, "not approved");
+		await ChainToken.at(token).then(function(i){return i.approve(accounts[0],2,{from :accounts[1]})});
+		var token; 
+		return TokenSale.deployed().then(function(instance)	{
+			token = instance;
+			return token.allowance.call(accounts[1],accounts[0]);
+		})
+
 	})
 
 	it("token transfer from", async function(){
