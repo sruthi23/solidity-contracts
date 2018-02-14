@@ -46,12 +46,14 @@ contract('TokenSale', function(accounts) {
 	it("token transfer by admin",async function(){
 
 		var tc = await TokenSale.deployed();
-		var c = await tc.tokenTransfer('0xf17f52151ebef6c7334fad080c5704d77216b732',{from :'0x627306090abab3a6e1400e9345bc60c78a8bef57'});
-		var token = await tc.demotoken.call();
-		console.log("c is",c);
-		console.log("token address",token);
-		assert(c != true,"failed");
-
+		var c = await tc.tokenTransfer(accounts[1]);
+		var token; 
+		return await TokenSale.deployed().then(function(instance){
+			token = instance;
+			return token.balance(accounts[1]);
+		}).then(function(result){
+			assert.equal(result,20,"Transfer failed");
+		})
 	});
 
 	it("token transfer by non-admin", async function(){
