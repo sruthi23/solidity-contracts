@@ -4,11 +4,16 @@ var ChainToken = artifacts.require("ChainToken");
 contract('TokenSale', function(accounts) {
 
 	it("should assert true", async function() {
-		var tc = await TokenSale.deployed();
-		assert.isTrue(true);
-		console.log('token created',tc)
-
+		var token;
+		return await TokenSale.deployed().then(function(instance){
+			token = instance;
+			return token.balance(token.address);
+		}).then(function(result){
+			assert.equal(result.toNumber(), 1e+24, 'total supply is wrong');
+			
+		})
 	});
+	
 
 	it("should return balance of given address", async function(){
 		var tc = await TokenSale.deployed();
