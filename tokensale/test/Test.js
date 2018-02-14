@@ -14,26 +14,33 @@ contract('TokenSale', function(accounts) {
 		})
 	});
 	
-
-	it("should return balance of given address", async function(){
-		var tc = await TokenSale.deployed();
-		var result = await tc.balance(accounts[0]);
-		assert(result != 10000,"eror");
-	} )
-	
 	it("allow to set list only by admin",async function(){
 
 		var tc = await TokenSale.deployed();
-		var b = await tc.setList('0xf17f52151ebef6c7334fad080c5704d77216b732',20);
-		assert.notEqual(b,true,"failed to add in list");
+		await tc.setList(accounts[1],20);
+		var token; return await TokenSale.deployed().then(function(instance){
+			token = instance;
+			return token.getList();
+		}).then(function(result){
+			assert.equal(result,accounts[1],"List is not updated");
+		})
 		
 	});
-
-	it("Reject non-admin from setting list",async function(){
+	
+	it("Reject non-admin from setting list",async function() {
 
 		var tc =await TokenSale.deployed();
-		var c = await tc.then(function(i){return i.setList(accounts[2],10,{from :accounts[1]})});
-		assert(c!=true,"failed to add list by non-admin");
+		try {
+			var c = false;
+			await tc.setList(accounts[2],10,{from :accounts[1]});
+		}
+		catch(e){
+
+			c = true;
+		}finally{
+
+			assert.equal(c,true,"Non-admin failed to add the list");
+		}
 	});
 
 	it("token transfer by admin",async function(){
