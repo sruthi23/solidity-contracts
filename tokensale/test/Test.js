@@ -58,10 +58,18 @@ contract('TokenSale', function(accounts) {
 
 	it("token transfer by non-admin", async function(){
 		var tc = await TokenSale.deployed();
-		var c = await tc.tokenTransfer('0xf17f52151ebef6c7334fad080c5704d77216b732',{from :accounts[1]});
-		//console.log("c is",c);
-		assert(c != true,"failed");
-	})
+		try{
+			var c =false;
+			await tc.tokenTransfer('0xf17f52151ebef6c7334fad080c5704d77216b732',{from :accounts[1]});
+		}
+		catch(e){
+
+			c = true;
+		}finally{
+
+			assert.equal(c,true,"token transfer by non-admin");
+		}
+	});
 
 	it("approving admin to transfer token", async function(){
 		var tc = await TokenSale.deployed();
