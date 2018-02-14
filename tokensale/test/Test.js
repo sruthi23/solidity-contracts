@@ -83,14 +83,17 @@ contract('TokenSale', function(accounts) {
 
 	})
 
-	it("token transfer from", async function(){
+	it("should transfer token to accounts[2]", async function(){
 		var tc = await TokenSale.deployed();
-		var token = await tc.demotoken.call();
-		var result = await ChainToken.at(token).then(function(i){i.approve(accounts[0],2,{from :accounts[1]})});
-		var result = await tc.tokenTransferFrom(accounts[1],accounts[2],2,{from :accounts[0]})
-		console.log("result!!!",result);	
+		await tc.tokenTransferFrom(accounts[1],accounts[2],2,{from :accounts[0]});
+		var token; 
+		return await TokenSale.deployed().then(function(instance){
+			token = instance;
+			return token.balance.call(accounts[2]);
+		}).then(function(result){
+			
+			assert.equal(result,2,"accounts[1] not approved accounts[0] to spend tokens");
+		})
 	})
-
-
 
 });
